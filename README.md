@@ -37,6 +37,8 @@ The architecture is based on:
 
 The LLM becomes a **stateless reasoning engine** operating over durable, inspectable artifacts.
 
+This enables long-running analytical, planning, and decision-making workflows that remain coherent across sessions and model changes.
+
 ---
 
 ## Architectural Principles
@@ -113,7 +115,7 @@ Additional modules following the same pattern exist and are released on a stagge
 - Developed iteratively through practical application
 - Ongoing work; architecture evolves through real-world constraints
 
-This is not a benchmarked research system, but a **practice-driven architectural method**.
+The architecture is evaluated through sustained real-world use rather than isolated benchmarks.
 
 ---
 
@@ -123,6 +125,10 @@ This is not a benchmarked research system, but a **practice-driven architectural
 - **Commercial use:** requires a license
 
 See individual module repositories for specific licensing terms.
+
+For licensing inquiries, please contact:  
+licensing@metamemoryworks.com
+lizenz@metamemoryworks.de
 
 ---
 
