@@ -127,8 +127,8 @@ The architecture is evaluated through sustained real-world use rather than isola
 See individual module repositories for specific licensing terms.
 
 For licensing inquiries, please contact:  
-licensing@metamemoryworks.com
-lizenz@metamemoryworks.de
+- licensing@metamemoryworks.com
+- lizenz@metamemoryworks.de
 
 ---
 
