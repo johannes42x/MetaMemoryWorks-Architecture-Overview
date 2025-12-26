@@ -103,6 +103,9 @@ The architecture is operationalized in several modular systems, including:
 - **trainingOS** — structured training and fitness logging  
   https://github.com/johannes42x/trainingOS
 
+- **nutritionOS** — persistent nutrition, cooking, and intake management based on long-term state
+  https://github.com/johannes42x/nutritionOS
+
 Each module applies the same underlying architectural method to a specific domain.
 
 Additional modules following the same pattern exist and are released on a staggered basis.
