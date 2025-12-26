@@ -1,5 +1,7 @@
 # MetaMemoryWorks — Architecture Overview
 
+**A file-based architecture for building LLM-assisted systems with persistent memory.**
+
 MetaMemoryWorks is a file-based architecture and method for building
 LLM-assisted systems that maintain **persistent, user-controlled state ("memory")**
 across extended work, analysis, and decision processes.
@@ -14,6 +16,7 @@ the loss of structured state, decisions, and context between interactions.
 
 This repository provides a **system-level overview** of the method and
 serves as a stable entry point to the individual MetaMemoryWorks modules.
+
 
 
 ## The Problem
