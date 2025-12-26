@@ -1,6 +1,6 @@
 # MetaMemoryWorks — Architecture Overview
 
-**A file-based architecture for building LLM-assisted systems with persistent memory.**
+**A file-based architecture for building LLM-assisted systems with explicit, persistent memory.**
 
 MetaMemoryWorks is a file-based architecture and method for building
 LLM-assisted systems that maintain **persistent, user-controlled state ("memory")**
@@ -17,159 +17,205 @@ the loss of structured state, decisions, and context between interactions.
 This repository provides a **system-level overview** of the method and
 serves as a stable entry point to the individual MetaMemoryWorks modules.
 
-
+---
 
 ## The Problem
 
-Most LLM-based assistants rely on:
-- transient chat context
-- prompt engineering
-- retrieval-based augmentation (RAG)
+Most LLM-based assistants are built around mechanisms such as
+transient chat context, prompt engineering, or retrieval-based augmentation (including RAG).
 
-These approaches do not provide:
-- persistent functional memory
-- explicit state transitions
-- auditability over time
-- user ownership of long-term state
+While effective for short interactions, these approaches do not provide
+durable system-level properties such as persistent memory, explicit state
+transitions, or long-term auditability under user control.
 
-As a result, complex workflows fragment, decisions get lost, and assistants cannot reliably support extended analytical or operational processes.
+As a consequence, complex workflows fragment over time.
+Decisions are lost between sessions, prior reasoning cannot be reliably
+reconstructed, and assistants struggle to support extended analytical
+or operational processes.
 
 ---
 
 ## Core Idea
 
-MetaMemoryWorks treats **memory as an external system property**, not as an implicit model feature.
+MetaMemoryWorks treats memory as an explicit system property that is
+represented directly within the assistant’s working environment,
+rather than as an implicit or opaque feature of a language model.
 
-The architecture is based on:
-- explicit files as state carriers
-- append-only logs instead of mutable context
-- separation of model, rules, and state
-- model-agnostic persistence
+Relevant state — including information, instructions, roles, routing,
+and other contextual constraints — is stored in human-readable files
+that the LLM can access as part of its normal working context, without
+requiring retrieval systems, embeddings, or external tooling.
 
-The LLM becomes a **stateless reasoning engine** operating over durable, inspectable artifacts.
+State is made explicit and inspectable.
+Different kinds of state follow different structural conventions,
+but are treated uniformly as durable artifacts that shape the
+assistant’s behavior over time.
 
-This enables long-running analytical, planning, and decision-making workflows that remain coherent across sessions and model changes.
+Within this setup, the LLM does not carry long-term state internally.
+Instead, it reconstructs its working state from the available files
+and operates based on the instructions and context they provide.
 
----
+This approach makes it possible to support long-running analytical,
+planning, and decision-making workflows that remain coherent across
+sessions, restarts, and even model changes.
 
-## Architectural Principles
+At the same time, it keeps control close to the user.
+Assistants and their memory can be configured, adjusted, corrected, or
+discarded directly by working with the underlying files.
+Users manage their own data, decide what is kept or removed, and can
+adapt instructions and context as their needs change — without requiring
+programming skills or specialized tooling.
 
-- **File-based**  
-  All state is stored in human-readable files under user control.
-
-- **Append-only**  
-  State evolves through explicit additions, preserving history and decisions.
-
-- **Model-independent**  
-  The method does not rely on a specific LLM or provider.
-
-- **Explicit over implicit**  
-  Rules, roles, memory, and intent are externalized instead of embedded in prompts.
-
-- **Reconstructable state**  
-  System state can be rebuilt deterministically from files after restarts or model changes.
-
----
-
-## Core Architecture
-
-The abstract architecture and method are defined in the following repository:
-
-- **MetaMemoryArchitecture**  
-  https://github.com/johannes42x/MetaMemoryArchitecture  
-  (method specification, architectural rules, state model)
-
-This repository describes the method independently of any concrete domain or module.
+The architecture is shaped and refined through sustained real-world use,
+rather than through isolated benchmarks or synthetic demonstrations.
 
 ---
 
 ## System Structure (Abstract)
 
-At a high level, MetaMemoryWorks separates:
+At a high level, MetaMemoryWorks separates the system into four
+conceptual components:
 
 - **State**  
-  Persistent files representing decisions, memory, and progress
+  Persistent files that represent accumulated information, decisions,
+  and progress over time.
 
-- **Rules & Method**  
-  How state is read, written, and evolved
+- **Rules and Method**  
+  The conventions that govern how state is interpreted, updated,
+  and evolved.
 
 - **LLM**  
-  A replaceable reasoning component without internal memory assumptions
+  A replaceable reasoning component that operates on the available
+  state without relying on hidden internal memory.
 
 - **Modules**  
-  Domain-specific instantiations of the same method
+  Domain-specific applications that instantiate the same method
+  for different problem areas.
 
 ---
 
-## Modules (Selected)
+## Architectural Principles
 
-The architecture is operationalized in several modular systems, including:
+MetaMemoryWorks follows a small set of architectural principles that
+govern how state, instructions, and reasoning are represented and evolved.
 
-- **scanOS** — external information capture & structured ingestion  
+All relevant state is stored in human-readable files under user control,
+making memory inspectable, portable, and independent of proprietary
+storage mechanisms.
+
+State changes are expressed explicitly.
+In many cases this takes the form of append-only logs, but the core
+principle is that state evolution remains visible, traceable, and
+correctable over time.
+
+The architecture is model-independent.
+It does not rely on a specific LLM, provider, or runtime environment, and
+can be reconstructed across restarts or model changes from the available
+artifacts.
+
+Rules, roles, memory, and intent are treated explicitly rather than being
+embedded implicitly in prompts or transient context.
+
+As a result, system state can be rebuilt in a deterministic manner from
+its files, allowing workflows to remain stable even when components
+change.
+
+
+---
+
+## Core Architecture
+
+The abstract architecture and underlying method are specified separately
+in the following repository:
+
+**MetaMemoryArchitecture**  
+https://github.com/johannes42x/MetaMemoryArchitecture
+
+That repository defines the architectural rules, state model, and method
+independently of any concrete domain or application.
+
+This repository focuses on explaining the architecture at a system level
+and situating it within the broader MetaMemoryWorks ecosystem.
+
+---
+
+## Modules
+
+The MetaMemoryWorks architecture is operationalized through a set of
+modular systems that apply the same method to different domains.
+
+Each module represents a concrete, working instantiation of the
+architecture, using persistent state to support a specific kind of
+long-running workflow.
+
+Selected modules include:
+
+- **scanOS** — structured ingestion of external information  
   https://github.com/johannes42x/scanOS
 
 - **noteOS** — persistent knowledge and note management  
   https://github.com/johannes42x/noteOS
 
-- **trainingOS** — structured training and fitness logging  
+- **trainingOS** — long-term training and fitness state  
   https://github.com/johannes42x/trainingOS
 
-- **nutritionOS** — persistent nutrition, cooking, and intake management based on long-term state
+- **nutritionOS** — persistent nutrition and cooking workflows  
   https://github.com/johannes42x/nutritionOS
 
-Each module applies the same underlying architectural method to a specific domain.
+All modules follow the same architectural principles.
+They differ only in domain focus, structure, and conventions.
 
-Additional modules following the same pattern exist and are released on a staggered basis.
-
----
-
-## Usage Status
-
-- Actively used in daily analytical and decision-making workflows
-- Developed iteratively through practical application
-- Ongoing work; architecture evolves through real-world constraints
-
-The architecture is evaluated through sustained real-world use rather than isolated benchmarks.
+Additional modules based on the same method exist and are released
+incrementally.
 
 ---
 
 ## Licensing
 
-- **Private / personal use:** free
-- **Commercial use:** requires a license
+MetaMemoryWorks is available under different terms depending on usage
+context:
 
-See individual module repositories for specific licensing terms.
+- **Private / personal use**  
+  Free of charge.
 
-For licensing inquiries, please contact:  
-- licensing@metamemoryworks.com
+- **Commercial or organizational use**  
+  Requires a license.
+
+Specific licensing terms are defined in the individual module
+repositories.
+
+For licensing inquiries:
+- licensing@metamemoryworks.com  
 - lizenz@metamemoryworks.de
+
 
 ---
 
 ## Scope of This Repository
 
-This repository intentionally:
-- focuses on architectural explanation
-- avoids implementation details
-- serves as a stable reference point for the system as a whole
+This repository is intentionally limited in scope.
+It focuses on explaining the MetaMemoryWorks architecture at a system
+level and serves as a stable reference point for the overall method.
 
-For concrete implementations, see the linked module repositories.
+Concrete implementations, domain-specific structures, and practical
+workflows are documented in the individual module repositories linked
+above.
 
----
 
 ## Author
 
 Johannes Glaser  
-Architecture & Method Development  
+Architecture and Method Development  
 MetaMemoryWorks (since 2025)
 
 ---
 
-## Project Links & Contact
+## Project Links and Contact
 
-- Project website (EN): https://metamemoryworks.com  
-- Project website (DE): https://metamemoryworks.de  
+Project websites:
+- https://metamemoryworks.com  
+- https://metamemoryworks.de  
 
-For questions regarding the architecture or method  
+For questions regarding the architecture or method:
 - contact@metamemoryworks.com  
 - kontakt@metamemoryworks.de
