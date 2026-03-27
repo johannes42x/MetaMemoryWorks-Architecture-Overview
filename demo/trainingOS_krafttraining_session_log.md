@@ -1,4 +1,4 @@
-##Krafttraining-Session (Log)
+## Krafttraining-Session (Log)
 
 **Du:**  
 wir starten krafttraining. lädst du mal meine routine aus dem log und die referenzwerte vom letzten mal?
