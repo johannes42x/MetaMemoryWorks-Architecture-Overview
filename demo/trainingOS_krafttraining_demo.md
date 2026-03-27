@@ -1,4 +1,4 @@
-trainingOS - Krafttraining-Session (Demo, ChatGPT)
+###trainingOS - Krafttraining-Session (Demo, ChatGPT)
 
 Du:
 krafttraining startet. schaust du mal ins krafttrainingslog und gibst mir referenzwerte vom letzten training aus?
