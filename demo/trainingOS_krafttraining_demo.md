@@ -801,7 +801,6 @@ Fitness‑Griffe mit Karabiner – Sehr günstiges Set für Ruder-/Band- oder Ka
 🏠 Du willst billig & zuhause trainieren
 👉 Kombiniere[Gerätenamen entfernt; J.G.]
 → kannst Face Pull-ähnliche Bewegungen auch ohne Kabelzug sauber ausführen. 
-modusX
 
 🧩 Vielseitig für Pull-Moves
 👉 Breitere Lat-Zug-Griffe + robustere Handles
